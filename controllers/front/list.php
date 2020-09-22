@@ -35,30 +35,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
         parent::initContent();
         if (Context::getContext()->customer->logged) {
 
-
-
-            function liste($l)
-            {
-                if ($handle = opendir($l)) {
-                    while (false !== ($entry = readdir($handle))) {
-                        if ($entry != "." && $entry != "..") {
-                            $la[] = $entry;
-                        }
-                    }
-                    closedir($handle);
-                }
-                return $la;
-            }
-
-            $i = liste('article');
-            //$smarty->assign('i', $i);
-
-
-
-
             $db = Db::getInstance();
-            $id_product = (int)$_POST['product'];
-            //$id_product = (int)$_GET['product'];
             $id_customer = (int)$this->context->customer->id;
             $id_shop = (int)Context::getContext()->shop->id;
 
@@ -75,6 +52,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             $sql->rightJoin('category_product', 'cp', 'p.id_product = cp.id_product');
 
             $sql->where('id_customer = ' . (int)$id_customer);
+            $sql->where('id_shop = ' . (int)$id_shop);
             $sql->orderBy('c.id_product');
 
 
