@@ -1,0 +1,23 @@
+.product-flags li {
+    position: absolute;
+    padding: 15px;
+}
+
+.product-flags li .star {
+    top: 0 !important;
+    left: 180px !important;
+    z-index: 2;
+    top: -36px !important;
+    left: 215px !important;
+    cursor: pointer;
+}
+
+.product-flags li input:only-child {
+    display: block !important;
+    width: 30px;
+    height: 30px;
+}
+
+.product-flags li.product-flags li.product-flag {
+    background: #fff;
+}
