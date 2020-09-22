@@ -197,22 +197,23 @@
         </article> *}
     
     
-        {capture name=path}
-            <a href="{$link->getPageLink('my-account', true)|escape:'html':'UTF-8'}">
-                {l s='My account' mod='favoriteproducts'}</a>
-            <span class="navigation-pipe">{$navigationPipe}</span>{l s='My favorite products.' mod='favoriteproducts'}
-        {/capture}
-        {* {include file="$tpl_dir./breadcrumb.tpl"} *}
+    
     
         <div id="favoriteproducts_block_account">
-            <h2>{l s='My favorite products.' mod='favoriteproducts'}</h2>
             {if $favoriteproducts}
-                <div>
+                <div class="row">
                     {foreach $favoriteproducts as $product}
                         {* {foreach from=$favoriteProducts item=favoriteProduct} *}
-                            <div class="favoriteproduct clearfix">
+                            <div class="favoriteproduct col-lg-3">
                                 <a href="{$link->getProductLink($product.id_product, null, null, null, null, $product.id_shop)|escape:'html':'UTF-8'}" class="product_img_link">
-                                    <img src="{$link->getImageLink($product.link_rewrite, $product.image, 'medium_default')|escape:'html':'UTF-8'}" alt="" /></a>
+                                    {* <img src="{$link->getImageLink($product.link_rewrite, $product.image, 'medium_default')|escape:'html':'UTF-8'}" alt="" /></a> *}
+                
+                                {$product.price_final}
+                                <img src="{$link->getImageLink($product.link_rewrite, $product.id_product,'home_default', $product.image)|escape:'html':'UTF-8'}" alt="" />
+                                {* {$link->getPriceStatic($productid)} *}
+                
+                                {* {$link->getProductLink($product.id_product)|var_dump} *}
+                
                                 <h3><a href="{$link->getProductLink($product.id_product, null, null, null, null, $product.id_shop)|escape:'html':'UTF-8'}">{$product.name|escape:'html':'UTF-8'}</a></h3>
                                 <div class="product_desc">{$product.description_short|strip_tags|escape:'html':'UTF-8'}</div>
                 
