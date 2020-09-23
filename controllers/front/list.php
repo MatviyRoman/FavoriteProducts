@@ -15,7 +15,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
 
         $this->registerJavascript(
             'front-controller-module',
-            'modules/' . $this->module->name . '/views/js/front/favoriteproducts-list.js',
+            'modules/' . $this->module->name . '/views/js/front/ajax/ajax_favoriteproducts_list.js',
             [
                 'position' => 'bottom',
                 'priority' => 1000,

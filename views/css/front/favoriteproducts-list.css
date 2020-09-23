@@ -37,3 +37,11 @@ article .item_product {
 .modal .star {
     background: url(../../img/star.png) center no-repeat;
 }
+
+.custom-control {
+    padding-left: 0;
+}
+
+.checkall {
+    margin-bottom: 30px;
+}
