@@ -2,11 +2,9 @@ console.log('ajax_favoriteproducts_list.js');
 
 $('article .addstar').click(function () {
     const item_id = $(this).val();
-    $('#product-' + item_id).hide();
-    console.log('product' + item_id);
+    $('#product-' + item_id).remove();
+    console.log('remove product ' + item_id);
 });
-
-
 
 $(document).on('click', '#checkbox_all', function () {
     $('.check').not(this).prop('checked', this.checked);
@@ -18,7 +16,6 @@ $(document).on('click', '#checkbox_all', function () {
         $this.text('CHECKBOX ALL');
     }
 });
-
 
 $(document).on('change', '.check', function () {
     if ($('.check:checked').length == $('.check').length) {
@@ -36,7 +33,7 @@ $(document).on('change', '.check', function () {
         if ($this.hasClass('changetext')) {
             $this.text('CHECKBOX ALL');
             // $this.toggleClass('changetext');
-            $this.addClass('').removeClass('changetext');
+            $this.removeClass('changetext');
         }
     };
 });
