@@ -10,10 +10,14 @@
     
     <div id="favoriteproducts_block_account">
         {if $favoriteproducts}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="checkbox_all[]" id="checkbox_all" value="">
+                <label for="checkbox_all" class="checkall btn btn-sm btn-primary">checkbox all</label>
+            </div>
             <div class="row">
                 {foreach $favoriteproducts as $product item=favoriteProduct}
                     {block name='product_miniature_item'}
-                        <article class="product-miniature js-product-miniature col-lg-3 col mr-auto" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemscope itemtype="http://schema.org/Product" style="margin-bottom: 30px">
+                        <article id="product-{$product.id_product}" class="product-miniature js-product-miniature col-lg-3 col mr-auto" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemscope itemtype="http://schema.org/Product" style="margin-bottom: 30px">
                             <div class="thumbnail-container">
                                 {block name='product_thumbnail'}
                                     <a href="{$link->getProductLink($product.id_product)|escape:'html':'UTF-8'}" class="thumbnail product-thumbnail">
@@ -49,7 +53,7 @@
                                                 {/if}
                         
                                                 {* {hook h='displayProductPriceBlock' product=$product type="before_price"} *}
-                                                <input type="checkbox" id="item_product{$product.id_product}" class="item_product" value="{$product.id_product}">
+                                                <input type="checkbox" id="item_product{$product.id_product}" class="check item_product" value="{$product.id_product}">
                                                 <input type="checkbox" id="cb{$product.id_product}" class="addstar" value="{$product.id_product}" checked>
                                                 <label for="cb3" class="star"></label>
                                                 {* <div class="remove">
@@ -60,7 +64,7 @@
                                                 <span itemprop="price" class="price">
                                                     {* {$product.price} *}
                                                     {$product.price * (1+($product.rate/100))}
-                                                    {$brutto = number_format($prajs, 2, ',', '')}
+                                                    {* {$brutto = number_format($prajs, 2, ',', '')} *}
                                                 </span><br>
                                                 <a href="" class="btn btn-sm btn-primary">Order Now</a>
                         
@@ -76,7 +80,6 @@
                                     {/block}
                                 </div>
                 
-                                <!-- @todo: use include file='catalog/_partials/product-flags.tpl'} -->
                                 {block name='product_flags'}
                                     <ul class="product-flags">
                                         {foreach from=$product.flags item=flag}
@@ -109,7 +112,8 @@
     
         <ul class="footer_links">
             <li class="fleft">
-                <a href="{$link->getPageLink('my-account', true)|escape:'html':'UTF-8'}" class="btn btn-sm btn-primary">{l s='Back to account'}</a></li>
+                <a href="{$link->getPageLink('my-account', true)|escape:'html':'UTF-8'}" class="btn btn-sm btn-primary">{l s='Back to account'}</a>
+            </li>
         </ul>
     </div>
 {/block}
