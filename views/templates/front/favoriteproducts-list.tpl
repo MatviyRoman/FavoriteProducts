@@ -55,7 +55,7 @@
                                                 {* {hook h='displayProductPriceBlock' product=$product type="before_price"} *}
                                                 <input type="checkbox" id="item_product{$product.id_product}" class="check item_product" value="{$product.id_product}">
                                                 <input type="checkbox" id="cb{$product.id_product}" class="addstar" value="{$product.id_product}" checked>
-                                                <label for="cb3" class="star"></label>
+                                                <label for="cb{$product.id_product}" class="star"></label>
                                                 {* <div class="remove">
                                                     <img rel="ajax_id_favoriteproduct_{$product.id_product}" src="/modules/favoriteproducts/views/img/del_star.png" alt="" class="icon" />
                                                 </div> *}

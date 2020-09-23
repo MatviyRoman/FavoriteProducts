@@ -1,10 +1,9 @@
 console.log('ajax_favoriteproducts_list.js');
 
 $('article .addstar').click(function () {
-    $(this).hide();
-
-    var str = $(this).val();
-    console.log('ss' + str);
+    const item_id = $(this).val();
+    $('#product-' + item_id).hide();
+    console.log('product' + item_id);
 });
 
 
