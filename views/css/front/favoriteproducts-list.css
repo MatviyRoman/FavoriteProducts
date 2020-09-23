@@ -21,3 +21,15 @@
 .product-flags li.product-flags li.product-flag {
     background: #fff;
 }
+
+
+article {
+    position: relative;
+}
+
+article .item_product {
+        position: absolute;
+    top: -255px;
+    transform: scale(2);
+    left: 15px;
+}
