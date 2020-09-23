@@ -28,8 +28,12 @@ article {
 }
 
 article .item_product {
-        position: absolute;
+    position: absolute;
     top: -255px;
     transform: scale(2);
     left: 15px;
+}
+
+.modal .star {
+    background: url(../../img/star.png) center no-repeat;
 }
