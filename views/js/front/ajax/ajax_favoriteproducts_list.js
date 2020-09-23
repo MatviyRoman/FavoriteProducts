@@ -34,9 +34,10 @@ $(document).on('change', '.check', function () {
     } else {
         $('#checkbox_all').prop('checked', false);
         const $this = $('.checkall');
-        $this.toggleClass('changetext');
-        if (!$this.hasClass('changetext')) {
+        if ($this.hasClass('changetext')) {
             $this.text('CHECKBOX ALL');
+            // $this.toggleClass('changetext');
+            $this.addClass('').removeClass('changetext');
         }
     };
 });
