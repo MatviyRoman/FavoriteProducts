@@ -1,6 +1,6 @@
 {extends 'page.tpl'}
 {block content}
-    {if result}
+    {if $result}
         <style>
             .result {
                 color: #13462a;
@@ -10,8 +10,10 @@
                 padding-bottom: 20px;
             }
         </style>
-    {/if}
-    {if error}
+        <div class="result">
+            {$result}
+        </div>
+    {elseif $error}
         <style>
             .error {
                 color: #f00;
@@ -22,11 +24,8 @@
             }
         </style>
         <div class="error">
-            {$error}
+            {$error}{$result}
         </div>
-    {elseif result}
-        <div class="result">
-            {$result}
-        </div>
+    {else}
     {/if}
 {/block}

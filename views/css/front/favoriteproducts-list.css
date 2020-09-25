@@ -40,8 +40,17 @@ article .item_product {
 
 .custom-control {
     padding-left: 0;
+    margin-bottom: 30px;
 }
 
-.checkall {
-    margin-bottom: 30px;
+.custom-control .btn+.btn {
+    margin-left: 20px;
+}
+
+label {
+    margin: 0;
+}
+
+.result {
+    display: none;
 }

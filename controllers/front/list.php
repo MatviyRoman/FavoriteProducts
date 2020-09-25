@@ -22,6 +22,15 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             ]
         );
 
+        $this->registerJavascript(
+            'front-controller-module-del',
+            'modules/' . $this->module->name . '/views/js/front/ajax/ajax_favoriteproducts_del.js',
+            [
+                'position' => 'bottom',
+                'priority' => 1000,
+            ]
+        );
+
         return parent::setMedia();
     }
 
