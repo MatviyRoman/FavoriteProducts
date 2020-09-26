@@ -31,6 +31,15 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             ]
         );
 
+        $this->registerJavascript(
+            'front-controller-module-buy',
+            'modules/' . $this->module->name . '/views/js/front/ajax/ajax_favoriteproducts_buy.js',
+            [
+                'position' => 'bottom',
+                'priority' => 1000,
+            ]
+        );
+
         return parent::setMedia();
     }
 
@@ -44,7 +53,6 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             $id_customer = (int)$this->context->customer->id;
             $id_shop = (int)Context::getContext()->shop->id;
             $id_lang = (int) Configuration::get('PS_LANG_DEFAULT');
-            //$name = Tools::getValue('name');
 
 
             $sql = new DbQuery();
@@ -52,6 +60,11 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             $sql->from('favorite_products', 'c');
             //$sql->innerJoin('product_lang', 'l', 'c.id_product = l.id_product AND l.id_product = ' . (int)$id_product);
             $sql->innerJoin('product', 'p', 'c.id_product = p.id_product');
+
+            $sql->innerJoin('product_attribute', 'pa', 'p.id_product = pa.id_product');
+            $sql->innerJoin('product_attribute_image', 'pai', 'pa.id_product_attribute = pai.id_product_attribute');
+
+
             $sql->innerJoin('tax', 't', 't.id_tax = p.id_tax_rules_group');
             $sql->innerJoin('product_lang', 'l', 'c.id_product = l.id_product');
 
@@ -74,6 +87,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
                 'last_name' => $contextObject->customer->lastname,
                 'email' => $contextObject->customer->email,
                 'favoriteproducts' => $db->executeS($sql),
+                'image' => '777',
             ));
             return $this->setTemplate("module:favoriteproducts/views/templates/front/favoriteproducts-list.tpl");
         } else {

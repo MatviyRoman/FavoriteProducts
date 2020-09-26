@@ -1,12 +1,16 @@
-{extends 'page.tpl'}
-
 {block content}
     <h2>
-        <center>{l s='Hello user '} {$first_name|upper} {$last_name|upper}</center>
-        {l s='Your Favorite products '}
+        {* <center>{l s='Hello user '} {$first_name|upper} {$last_name|upper}</center> *}
+        {l s='Your User Favorite Products List'}
     </h2>
     <br>
     {* <div>{l s='This product is no longer available.' d='Shop.Notifications.Error'}</div> *}
+    
+    
+    {$db|var_dump}
+    
+    {$show|var_dump}
+    
     
     <div id="favoriteproducts_block_account">
         {if $favoriteproducts}

@@ -10,7 +10,6 @@ class FavoriteProductsAjax_FavoriteProducts_Del_FavoritesModuleFrontController e
             $db = Db::getInstance();
             $id_customer = (int)$this->context->customer->id;
             $id_products = (array)$_POST['check'];
-            //$id_products = array(1, 2, 3, 4, 5);
 
             var_dump($id_products);
 
@@ -37,14 +36,6 @@ class FavoriteProductsAjax_FavoriteProducts_Del_FavoritesModuleFrontController e
                         'result' => 'All product delete where customer id=' . (int)$id_customer . ' ' . $id_product,
                     ));
                 }
-
-                // $db->execute($sql);
-
-                // echo 'DELETE FROM `ps_favorite_products` WHERE `id_product`= ' . $id_product . ' AND `id_customer`= ' . $id_customer . ' LIMIT 1<br>';
-
-                // $this->context->smarty->assign(array(
-                //     'result' => 'All product delete where customer id=' . (int)$id_customer . $id_product,
-                // ));
             } else {
                 $this->context->smarty->assign(array(
                     'error' => 'ERROR',
