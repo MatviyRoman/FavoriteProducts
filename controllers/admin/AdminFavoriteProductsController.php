@@ -36,8 +36,6 @@ class AdminFavoriteProductsController extends ModuleAdminController
 
         $this->context->smarty->assign(array(
             'favoriteproducts' => $db->executeS($sql),
-            'db' => $db,
-            'show' => $db->execute($sql),
         ));
 
         return $this->setTemplate('admin-favoriteproducts-list.tpl');
