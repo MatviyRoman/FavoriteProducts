@@ -46,11 +46,15 @@ class Favoriteproducts extends Module
 
         $tab = new Tab();
         $tab->class_name = 'AdminFavoriteProducts';
-        $tab->module = 'favoriteproducts';
+        $tab->module = $this->name;
+        $tab->id_parent = (int)Tab::getIdFromClassName('DEFAULT');
+        //$tab->id_parent = 2;
         $tab->icon = 'star';
-
-        $tab->name[1] = $this->l('Favorite Products List');
-        $tab->id_parent = 2;
+        //$tab->name[1] = $this->l('Favorite Products List');
+        $languages = Language::getLanguages();
+        foreach ($languages as $lang) {
+            $tab->name[$lang['id_lang']] = $this->l('Favorite Products List');
+        }
         $tab->active = 1;
         if (!$tab->save()) {
             return false;
@@ -64,6 +68,7 @@ class Favoriteproducts extends Module
             $this->registerHook('displayCustomerAccount') &&
             $this->registerHook('DisplayProductPriceBlock') &&
             $this->registerHook('actionFrontControllerSetMedia') &&
+            $this->registerHook('displayProductAdditionalInfo') &&
             //$this->installTab('2', 'AdminFavoriteProducts', 'Favorite Products List') &&
             $this->registerHook('actionCartSave');
     }
@@ -291,8 +296,8 @@ class Favoriteproducts extends Module
             //parent::initContent();
             $db = Db::getInstance();
             $product = $params['product'];
-            $id_product = (int)$product->id;
-            //$id_product_atribute = $product->id_product_atribute;
+            $id_product = (int)$product['id_product'];
+            $id_product_atribute = $product->id_product_atribute;
 
             $id_customer = (int)$this->context->customer->id;
             $id_shop = (int)Context::getContext()->shop->id;
@@ -301,7 +306,7 @@ class Favoriteproducts extends Module
             $sql->select('id_product');
             $sql->from('favorite_products');
             $sql->where('id_customer = ' . $id_customer);
-            $sql->where('id_product = ' . $id_product);
+            // $sql->where('id_product = ' . $id_product);
             //$sql->where('id_product_atribute = ' . $id_product_atribute);
             $sql->where('id_shop = ' . $id_shop);
 
@@ -311,18 +316,27 @@ class Favoriteproducts extends Module
             // $result = $db->executeS($request);
             // var_dump($result);
 
+
             if ($params['type']  == 'before_price' || $params['type']  == 'price') {
                 $request = 'SELECT `id_product` FROM `' . _DB_PREFIX_ . 'favorite_products` WHERE `id_customer` = ' . (int)$id_customer . ' AND `id_product` = ' . (int)$id_product;
                 $result = $db->executeS($request);
 
                 //var_dump($result);
-                //$product = $params['product'];
+                $product = $params['product'];
                 // return '<input type="checkbox" id="cb' . $product->id . '" class="addstar" value="' . $product->id . '" />
                 //             <label for="cb' . $product->id . '" class="star"></label>';
 
-                return '<input type="checkbox" id="cb' . $id_product . '" class="addstar" value="' . $id_product . '" />
-                <label for="cb' . $id_product . '" class="star"></label>';
+
+                return '<input size="1" type="text" class="multi_product_quantity" value="1" style="display: none" /><input type="checkbox" id="item_product' . $id_product . '" class="check item_product" value="' . $id_product . '"><input type="checkbox" id="cb' . $id_product . '" class="addstar" value="' . $id_product . '" /><label for="cb' . $id_product . '" class="star"></label>';
             }
         }
+    }
+
+    public function hookDisplayProductAdditionalInfo($params)
+    {
+        //if isset($params['product']) {
+        //  Now return the input type hidden with idproductattribute 
+        return '<input type="hidden" name="id_product_attribute" id="product_attribute_info" value="' . $params['product']['id_product_attribute'] . '"/>';
+        //}
     }
 }

@@ -32,32 +32,39 @@
             <table class="table user-list col-lg-6">
                 <thead>
                     <tr>
-                        <th><span>id_product</span></th>
-                        <th class="text-center"><span>Product Title</span></th>
-                        <th class="text-center"><span>Customer</span></th>
                         <th class="text-center"><span>Customer Id</span></th>
+                        {* <th><span>id_product</span></th>
+                        <th class="text-center"><span>Product Title</span></th> *}
+                        <th class="text-center"><span>Customer</span></th>
+                        {* <th class="text-center"><span>Favorite Products</span></th> *}
                         <th class="text-center"><span>Date Add</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     {foreach $favoriteproducts as $product}
                         <tr>
-                            <td>
+                            <td class="text-center">
+                                <span class="user-subhead">
+                                    {$product.id_customer}</span>
+                            </td>
+                            {* <td>
                                 <span class="user-link">
                                     {$product.id_product}</span>
                             </td>
                             <td>
                                 <span class="user-link">
                                     {$product.name}</span>
-                            </td>
+                            </td> *}
                             <td>
                                 <span class="user-link">
-                                    {$product.firstname} {$product.lastname}</span>
+                                    {$product.firstname|capitalize} {$product.lastname|capitalize}</span>
                             </td>
-                            <td class="text-center">
-                                <span class="user-subhead">
-                                    {$product.id_customer}</span>
-                            </td>
+            
+                            {* <td>
+                                <span class="user-link">
+                                    {$count}</span>
+                            </td> *}
+            
                             <td class="text-center">
                                 <span class="user-subhead">
                                     {$product.date_add}</span>

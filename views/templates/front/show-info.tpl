@@ -13,7 +13,7 @@
         <div class="result">
             {$result}
         </div>
-    {elseif $error}
+    {else if $error}
         <style>
             .error {
                 color: #f00;

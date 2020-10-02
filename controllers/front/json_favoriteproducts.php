@@ -23,8 +23,8 @@ class FavoriteProductsJson_FavoriteProductsModuleFrontController extends ModuleF
             echo json_encode($db->executeS($sql));
 
             $this->context->smarty->assign(array(
-                // 'json' => json_encode($db->executeS($sql)),
-                'json' => ($db->executeS($sql)),
+                //'json' => json_encode($db->executeS($sql)),
+                //'json' => ($db->executeS($sql)),
             ));
             return $this->setTemplate("module:favoriteproducts/views/templates/front/json/json_favoriteproducts.tpl");
         } else {

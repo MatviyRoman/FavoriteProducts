@@ -1,8 +1,3 @@
-.product-flags li {
-    position: absolute;
-    padding: 15px;
-}
-
 .product-flags li .star {
     top: 0 !important;
     left: 180px !important;
@@ -53,4 +48,22 @@ label {
 
 .result {
     display: none;
+}
+
+article {
+    margin-bottom: 40px;
+}
+
+article button.orderbtn {
+    margin-top: -63px;
+    outline: none !important;
+}
+
+article .num {
+    padding: 9px 10px;
+    width: 13%;
+}
+
+article .product-flags {
+    top: 50px;
 }

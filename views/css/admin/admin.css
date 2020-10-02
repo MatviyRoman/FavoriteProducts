@@ -1,5 +1,14 @@
-.favoriteproducts_block_admin {
+/* .favoriteproducts_block_admin {
     background: #fff;
     padding: 15px;
     margin-bottom: 30px;
+} */
+
+/* 
+.panel-heading .badge {
+    display: none;
+} */
+
+.panel-heading-action {
+    display: none;
 }
