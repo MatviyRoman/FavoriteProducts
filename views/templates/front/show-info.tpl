@@ -13,7 +13,7 @@
         <div class="result">
             {$result}
         </div>
-    {else if $error}
+    {elseif $error}
         <style>
             .error {
                 color: #f00;
@@ -24,8 +24,12 @@
             }
         </style>
         <div class="error">
-            {$error}{$result}
+            {$error}
         </div>
-    {else}
+    {elseif $cart}
+        <script>
+            //window.location = '{$urls.pages.cart}';
+            window.location = '/cart?action=show'
+        </script>
     {/if}
 {/block}

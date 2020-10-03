@@ -1,8 +1,5 @@
 <?php
 
-//require_once 'classes/controller/ProductListingFrontController.php';
-
-
 class FavoriteProductsListModuleFrontController extends ModuleFrontController
 {
     public function setMedia()
@@ -90,11 +87,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             $favoriteproducts = $mysql;
 
 
-
             var_dump($favoriteproducts);
-
-
-
 
 
             // $enter_id_product = Configuration::get('PRODS');
@@ -134,44 +127,6 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
             // ));
 
             // return $this->display(__FILE__, 'mymodule.tpl');
-
-
-
-            // $myProducts = $favoriteproducts;
-
-            // foreach( $myProducts as $id_product ) {
-            //     $myProducts[] = new Product($id_product);
-            // }
-
-            // var_dump($myProducts);
-
-
-            // $id_product = 10;
-            // // Language id
-            // $lang_id = (int) Configuration::get('PS_LANG_DEFAULT');
-            // // Load product object
-            //$product = new Product($id_product, false, $lang_id);
-            // // Validate product object
-            // if (Validate::isLoadedObject($product)) {
-
-            //     // Get product Quanity
-            //     echo $product->quantity;
-            //     // Get product minimum quantity
-            //     echo $product->minimal_quantity;
-
-            //     // Get product low stock threshold
-            //     echo $product->low_stock_threshold;
-
-            //     // Get product low stock alert
-            //     echo $product->low_stock_alert;
-
-            //     $link = new Link;
-            //     //$id_image = $val['id_image'];
-            //     //echo $link->getImageLink($product->link_rewrite[Context::getContext()->language->id], $id_image, 'home_default');
-            //     var_dump($id_image = Image::getCover($id_product));
-
-            //     echo $id_image['id_image'];
-            // }
 
 
             $contextObject = $this->context; // or this // $contextObject = Context::getContext();
@@ -219,49 +174,6 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
                 $product = new prepareMultipleProductsForTemplate($id_product, false, $lang_id);
             }
 
-
-            // Your product id
-            $id_product = 10;
-
-            // Language id
-            $lang_id = (int) Configuration::get('PS_LANG_DEFAULT');
-
-            // Load product object
-            $product = new Product($id_product, false, $lang_id);
-
-            // Validate product object
-            if (Validate::isLoadedObject($product)) {
-
-                // Get product Quanity
-                echo $product->quantity;
-
-                // Get product minimum quantity
-                echo $product->minimal_quantity;
-
-                // Get product low stock threshold
-                echo $product->low_stock_threshold;
-
-                // Get product low stock alert
-                echo $product->low_stock_alert;
-
-                $link = new Link;
-                //$id_image = $val['id_image'];
-                //echo $link->getImageLink($product->link_rewrite[Context::getContext()->language->id], $id_image, 'home_default');
-                var_dump($id_image = Image::getCover($id_product));
-
-                echo $id_image['id_image'];
-
-                $productLink = $link->getProductLink($id_product);
-                $productImg = $link->getImageLink($product->link_rewrite, $id_image, 'home_default');
-
-
-                // echo '<a href="' . $link->getProductLink($id_product) . '" class="thumbnail product-thumbnail"><img src="' . $link->getImageLink($product->link_rewrite, $id_image, 'home_default') . '" alt=""></a>';
-
-                // Print Product Object
-                // echo "<pre>";
-                // print_r($product);
-                // echo "</pre>";
-            }
 
             // $id_product = 1; //set your product ID here
             // $image = Image::getCover($id_product);
@@ -445,10 +357,6 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
 // }
 
 
-// $product->link_rewrite = $link_rewrite[(int)Context::getContext()->language->id];
-
-
-
 class GetProductData extends ProductListingFrontController
 {
     private $num;
@@ -480,14 +388,6 @@ class GetProductData extends ProductListingFrontController
 
         parent::init();
 
-        // if (!$this->category->checkAccess($this->context->customer->id)) {
-        //     header('HTTP/1.1 403 Forbidden');
-        //     header('Status: 403 Forbidden');
-        //     $this->errors[] = $this->trans('You do not have access to this category.', array(), 'Shop.Notifications.Error');
-        //     $this->setTemplate('errors/forbidden');
-
-        //     return;
-        // }
 
         $categoryVar = $this->getTemplateVarCategory();
 
@@ -525,30 +425,6 @@ class GetProductData extends ProductListingFrontController
         }
     }
 
-
-
-
-
-    public function getArray($desc = true)
-    {
-        for ($j = 0; $j < $this->num; $j++) {
-            for ($i = $j + 1; $i < $this->num; $i++) {
-                if ($desc) {
-                    if ($this->arr[$i] > $this->arr[$j]) {
-                        list($this->arr[$i], $this->arr[$j]) = [$this->arr[$j], $this->arr[$i]];
-                    }
-                } else {
-                    if ($this->arr[$i] < $this->arr[$j]) {
-                        list($this->arr[$i], $this->arr[$j]) = [$this->arr[$j], $this->arr[$i]];
-                    }
-                }
-            }
-        }
-        return $this->arr;
-    }
-
-
-
     public function info(GetProductData $products)
     {
         // Мы можем изменить закрытое свойство:
@@ -562,21 +438,6 @@ class GetProductData extends ProductListingFrontController
     }
 
 
-
-    /** string Internal controller name */
-    public $php_self = 'category';
-
-    /** @var bool If set to false, customer cannot view the current category. */
-    public $customer_access = true;
-
-    /**
-     * @var Category
-     */
-    protected $category;
-
-
-
-
     protected function getAjaxProductSearchVariables()
     {
         $data = parent::getAjaxProductSearchVariables();
@@ -585,54 +446,6 @@ class GetProductData extends ProductListingFrontController
 
         return $data;
     }
-
-
-
-    public function getListingLabel()
-    {
-    }
-
-    public function getProductSearchQuery()
-    {
-    }
-    public function getDefaultProductSearchProvider()
-    {
-    }
-
-
-    // protected function getProductSearchQuery()
-    // {
-    //     $query = new ProductSearchQuery();
-    //     $query
-    //         ->setIdCategory($this->category->id)
-    //         ->setSortOrder(new SortOrder('product', Tools::getProductsOrder('by'), Tools::getProductsOrder('way')));
-
-    //     return $query;
-    // }
-    // protected function getDefaultProductSearchProvider()
-    // {
-    //     return new CategoryProductSearchProvider(
-    //         $this->getTranslator(),
-    //         $this->category
-    //     );
-    // }
-    // public function getListingLabel()
-    // {
-    //     if (!Validate::isLoadedObject($this->category)) {
-    //         $this->category = new Category(
-    //             (int) Tools::getValue('id_category'),
-    //             $this->context->language->id
-    //         );
-    //     }
-
-    //     return $this->trans(
-    //         'Category: %category_name%',
-    //         array('%category_name%' => $this->category->name),
-    //         'Shop.Theme.Catalog'
-    //     );
-    // }
-
-
 
 
 
@@ -663,7 +476,6 @@ class GetProductData extends ProductListingFrontController
 
     //     return $productOut;
     // }
-
 
 
 
@@ -723,8 +535,6 @@ class GetProductData extends ProductListingFrontController
 
 
 
-
-
     //work
     // $products = array($favoriteproducts);
 
@@ -734,26 +544,3 @@ class GetProductData extends ProductListingFrontController
     //     $products[$p['id_product']] = new Product($p['id_product'], false, '1');
     // }
 }
-
-
-$products = [1, 2, 3];
-//echo 'number: ' . $products . "\n";
-
-$arr = new GetProductData($products);
-
-var_dump($arr);
-print "<br><br>\n";
-print 'Max number: ';
-//print_r($arr->getArray());
-//print_r($arr->prepareMultipleProductsForTemplate());
-print_r($arr->info(new GetProductData()));
-
-
-//var_dump($arr->baz(new GetProductData($product)));
-
-$getProductInfo = new GetProductData($products);
-
-
-//$getProductInfo->prepareProductForTemplate($rawproducts);
-//$getProductInfo->prepareMultipleProductsForTemplate();
-//var_dump($getProductInfo->prepareMultipleProductsForTemplate());

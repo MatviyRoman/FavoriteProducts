@@ -1,5 +1,14 @@
 article {
     position: relative !important;
+    margin-bottom: 50px !important;
+}
+
+article .item_product {
+    display: none;
+}
+
+article[id^="product"] input[type="checkbox"] {
+    display: block;
 }
 
 article .star {
