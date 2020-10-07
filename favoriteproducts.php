@@ -18,7 +18,7 @@ class Favoriteproducts extends Module
         $this->context = Context::getContext();
         $this->name = 'favoriteproducts';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Roman Matviy';
         $this->need_instance = 0;
 
@@ -47,7 +47,7 @@ class Favoriteproducts extends Module
         $tab = new Tab();
         $tab->class_name = 'AdminFavoriteProducts';
         $tab->module = $this->name;
-        $tab->id_parent = (int)Tab::getIdFromClassName('DEFAULT');
+        //$tab->id_parent = (int)Tab::getIdFromClassName('DEFAULT');
         //$tab->id_parent = 2;
         $tab->icon = 'star';
         //$tab->name[1] = $this->l('Favorite Products List');
@@ -66,9 +66,10 @@ class Favoriteproducts extends Module
             $this->registerHook('header') &&
             $this->registerHook('backOfficeHeader') &&
             $this->registerHook('displayCustomerAccount') &&
-            $this->registerHook('DisplayProductPriceBlock') &&
+            $this->registerHook('displayProductPriceBlock') &&
             $this->registerHook('actionFrontControllerSetMedia') &&
             $this->registerHook('displayProductAdditionalInfo') &&
+            $this->registerHook('displayFooterAfter') &&
             //$this->installTab('2', 'AdminFavoriteProducts', 'Favorite Products List') &&
             $this->registerHook('actionCartSave');
     }
@@ -81,12 +82,10 @@ class Favoriteproducts extends Module
 
         return parent::uninstall();
 
-
         // return parent::uninstall() 
         // &&
         // $this->uninstallTab('AdminFavoriteProducts');
     }
-
 
 
     // public function installTab($parent, $class_name, $name)
@@ -114,123 +113,123 @@ class Favoriteproducts extends Module
     /**
      * Load the configuration form
      */
-    public function getContent()
-    {
-        /**
-         * If values have been submitted in the form, process.
-         */
-        if (((bool)Tools::isSubmit('submitFavoriteproductsModule')) == true) {
-            $this->postProcess();
-        }
+    // public function getContent()
+    // {
+    //     /**
+    //      * If values have been submitted in the form, process.
+    //      */
+    //     if (((bool)Tools::isSubmit('submitFavoriteproductsModule')) == true) {
+    //         $this->postProcess();
+    //     }
 
-        $this->context->smarty->assign('module_dir', $this->_path);
-        $output = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
-        return $output . $this->renderForm();
-    }
+    //     $this->context->smarty->assign('module_dir', $this->_path);
+    //     $output = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
+    //     return $output . $this->renderForm();
+    // }
 
     /**
      * Create the form that will be displayed in the configuration of your module.
      */
-    protected function renderForm()
-    {
-        $helper = new HelperForm();
+    // protected function renderForm()
+    // {
+    //     $helper = new HelperForm();
 
-        $helper->show_toolbar = false;
-        $helper->table = $this->table;
-        $helper->module = $this;
-        $helper->default_form_language = $this->context->language->id;
-        $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG', 0);
+    //     $helper->show_toolbar = false;
+    //     $helper->table = $this->table;
+    //     $helper->module = $this;
+    //     $helper->default_form_language = $this->context->language->id;
+    //     $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG', 0);
 
-        $helper->identifier = $this->identifier;
-        $helper->submit_action = 'submitFavoriteproductsModule';
-        $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-            . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
-        $helper->token = Tools::getAdminTokenLite('AdminModules');
+    //     $helper->identifier = $this->identifier;
+    //     $helper->submit_action = 'submitFavoriteproductsModule';
+    //     $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
+    //         . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
+    //     $helper->token = Tools::getAdminTokenLite('AdminModules');
 
-        $helper->tpl_vars = array(
-            'fields_value' => $this->getConfigFormValues(), /* Add values for your inputs */
-            'languages' => $this->context->controller->getLanguages(),
-            'id_language' => $this->context->language->id,
-        );
+    //     $helper->tpl_vars = array(
+    //         'fields_value' => $this->getConfigFormValues(), /* Add values for your inputs */
+    //         'languages' => $this->context->controller->getLanguages(),
+    //         'id_language' => $this->context->language->id,
+    //     );
 
-        return $helper->generateForm(array($this->getConfigForm()));
-    }
+    //     return $helper->generateForm(array($this->getConfigForm()));
+    // }
 
     /**
      * Create the structure of your form.
      */
-    protected function getConfigForm()
-    {
-        return array(
-            'form' => array(
-                'legend' => array(
-                    'title' => $this->l('Settings'),
-                    'icon' => 'icon-cogs',
-                ),
-                'input' => array(
-                    array(
-                        'type' => 'switch',
-                        'label' => $this->l('Live mode'),
-                        'name' => 'FAVORITEPRODUCTS_LIVE_MODE',
-                        'is_bool' => true,
-                        'desc' => $this->l('Use this module in live mode'),
-                        'values' => array(
-                            array(
-                                'id' => 'active_on',
-                                'value' => true,
-                                'label' => $this->l('Enabled')
-                            ),
-                            array(
-                                'id' => 'active_off',
-                                'value' => false,
-                                'label' => $this->l('Disabled')
-                            )
-                        ),
-                    ),
-                    array(
-                        'col' => 3,
-                        'type' => 'text',
-                        'prefix' => '<i class="icon icon-envelope"></i>',
-                        'desc' => $this->l('Enter a valid email address'),
-                        'name' => 'FAVORITEPRODUCTS_ACCOUNT_EMAIL',
-                        'label' => $this->l('Email'),
-                    ),
-                    array(
-                        'type' => 'password',
-                        'name' => 'FAVORITEPRODUCTS_ACCOUNT_PASSWORD',
-                        'label' => $this->l('Password'),
-                    ),
-                ),
-                'submit' => array(
-                    'title' => $this->l('Save'),
-                ),
-            ),
-        );
-    }
+    // protected function getConfigForm()
+    // {
+    //     return array(
+    //         'form' => array(
+    //             'legend' => array(
+    //                 'title' => $this->l('Settings'),
+    //                 'icon' => 'icon-cogs',
+    //             ),
+    //             'input' => array(
+    //                 array(
+    //                     'type' => 'switch',
+    //                     'label' => $this->l('Live mode'),
+    //                     'name' => 'FAVORITEPRODUCTS_LIVE_MODE',
+    //                     'is_bool' => true,
+    //                     'desc' => $this->l('Use this module in live mode'),
+    //                     'values' => array(
+    //                         array(
+    //                             'id' => 'active_on',
+    //                             'value' => true,
+    //                             'label' => $this->l('Enabled')
+    //                         ),
+    //                         array(
+    //                             'id' => 'active_off',
+    //                             'value' => false,
+    //                             'label' => $this->l('Disabled')
+    //                         )
+    //                     ),
+    //                 ),
+    //                 array(
+    //                     'col' => 3,
+    //                     'type' => 'text',
+    //                     'prefix' => '<i class="icon icon-envelope"></i>',
+    //                     'desc' => $this->l('Enter a valid email address'),
+    //                     'name' => 'FAVORITEPRODUCTS_ACCOUNT_EMAIL',
+    //                     'label' => $this->l('Email'),
+    //                 ),
+    //                 array(
+    //                     'type' => 'password',
+    //                     'name' => 'FAVORITEPRODUCTS_ACCOUNT_PASSWORD',
+    //                     'label' => $this->l('Password'),
+    //                 ),
+    //             ),
+    //             'submit' => array(
+    //                 'title' => $this->l('Save'),
+    //             ),
+    //         ),
+    //     );
+    // }
 
     /**
      * Set values for the inputs.
      */
-    protected function getConfigFormValues()
-    {
-        return array(
-            'FAVORITEPRODUCTS_LIVE_MODE' => Configuration::get('FAVORITEPRODUCTS_LIVE_MODE', true),
-            'FAVORITEPRODUCTS_ACCOUNT_EMAIL' => Configuration::get('FAVORITEPRODUCTS_ACCOUNT_EMAIL', 'contact@prestashop.com'),
-            'FAVORITEPRODUCTS_ACCOUNT_PASSWORD' => Configuration::get('FAVORITEPRODUCTS_ACCOUNT_PASSWORD', null),
-        );
-    }
+    // protected function getConfigFormValues()
+    // {
+    //     return array(
+    //         'FAVORITEPRODUCTS_LIVE_MODE' => Configuration::get('FAVORITEPRODUCTS_LIVE_MODE', true),
+    //         'FAVORITEPRODUCTS_ACCOUNT_EMAIL' => Configuration::get('FAVORITEPRODUCTS_ACCOUNT_EMAIL', 'contact@prestashop.com'),
+    //         'FAVORITEPRODUCTS_ACCOUNT_PASSWORD' => Configuration::get('FAVORITEPRODUCTS_ACCOUNT_PASSWORD', null),
+    //     );
+    // }
 
     /**
      * Save form data.
      */
-    protected function postProcess()
-    {
-        $form_values = $this->getConfigFormValues();
+    // protected function postProcess()
+    // {
+    //     $form_values = $this->getConfigFormValues();
 
-        foreach (array_keys($form_values) as $key) {
-            Configuration::updateValue($key, Tools::getValue($key));
-        }
-    }
+    //     foreach (array_keys($form_values) as $key) {
+    //         Configuration::updateValue($key, Tools::getValue($key));
+    //     }
+    // }
 
     /**
      * Add the CSS & JavaScript files you want to be loaded in the BO.
@@ -238,8 +237,8 @@ class Favoriteproducts extends Module
     public function hookBackOfficeHeader()
     {
         if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path . 'views/js/back/favoriteproducts.js');
-            $this->context->controller->addCSS($this->_path . 'views/css/back/favoriteproducts.css');
+            $this->context->controller->addJS('modules/' . $this->module->name . '/views/js/back/favoriteproducts.js');
+            $this->context->controller->addCSS('modules/' . $this->module->name . '/views/css/back/favoriteproducts.css');
         }
     }
 
@@ -259,20 +258,22 @@ class Favoriteproducts extends Module
         return $this->display(__FILE__, 'account.tpl');
     }
 
-    public function hookActionFrontControllerSetMedia()
+    public function hookActionFrontControllerSetMedia($params)
     {
+        // if ('product' === $this->context->controller->php_self) {
         $this->context->controller->registerStylesheet(
             'favoriteproducts-style',
-            $this->_path . 'views/css/front/favoriteproducts.css',
+            'modules/' . $this->name . '/views/css/front/favoriteproducts.css',
             [
                 'media' => 'all',
                 'priority' => 1000,
             ]
         );
 
+        //$this->context->controller->addJS('modules/' . $this->name . '/views/js/front/favoriteproducts.js');
         $this->context->controller->registerJavascript(
             'favoriteproducts-javascript',
-            $this->_path . 'views/js/front/favoriteproducts.js',
+            'modules/' . $this->name . '/views/js/front/favoriteproducts.js',
             [
                 'position' => 'top',
                 'priority' => 0,
@@ -280,12 +281,13 @@ class Favoriteproducts extends Module
         );
         $this->context->controller->registerJavascript(
             'favoriteproducts-ajax-add',
-            $this->_path . 'views/js/front/ajax/ajax_favoriteproducts_add.js',
+            'modules/' . $this->name . '/views/js/front/ajax/ajax_favoriteproducts_add.js',
             [
                 'position' => 'top',
                 'priority' => 0,
             ]
         );
+        //}
     }
 
 
@@ -323,9 +325,6 @@ class Favoriteproducts extends Module
 
                 //var_dump($result);
                 $product = $params['product'];
-                // return '<input type="checkbox" id="cb' . $product->id . '" class="addstar" value="' . $product->id . '" />
-                //             <label for="cb' . $product->id . '" class="star"></label>';
-
 
                 return '<input size="1" type="text" class="multi_product_quantity" value="1" style="display: none" /><input type="checkbox" id="item_product' . $id_product . '" class="check item_product" value="' . $id_product . '"><input type="checkbox" id="cb' . $id_product . '" class="addstar" value="' . $id_product . '" /><label for="cb' . $id_product . '" class="star"></label>';
             }
@@ -334,9 +333,24 @@ class Favoriteproducts extends Module
 
     public function hookDisplayProductAdditionalInfo($params)
     {
-        //if isset($params['product']) {
-        //  Now return the input type hidden with idproductattribute 
-        return '<input type="hidden" name="id_product_attribute" id="product_attribute_info" value="' . $params['product']['id_product_attribute'] . '"/>';
-        //}
+        if (isset($params['product'])) {
+            return '<input type="hidden" name="id_product_attribute" id="product_attribute_info" value="' . $params['product']['id_product_attribute'] . '"/>';
+        }
+    }
+
+    public function hookDisplayFooterAfter($params)
+    {
+        $siteurl = __PS_BASE_URI__;
+        $this->context->smarty->assign(array(
+            'siteurl' => $siteurl,
+        ));
+
+        // $this->smarty->assign('in_footer', false);
+        // return $this->display(__FILE__, 'account.tpl');
+
+        // $this->smarty->assign('siteurl', false);
+        return $this->display(__FILE__, 'info.tpl');
+        //return $this->setTemplate("module:favoriteproducts/views/templates/hook/info.tpl");
+        // return '<script>var siteurl = "siteurl"; </script>';
     }
 }

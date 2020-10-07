@@ -10,5 +10,5 @@
 } */
 
 .panel-heading-action {
-    display: none;
+    display: none !important;
 }

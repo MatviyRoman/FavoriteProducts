@@ -6,7 +6,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
     {
         $this->registerStylesheet(
             'front-controller-module',
-            'modules/' . $this->module->name . '/views/css/front/favoriteproducts-list.css',
+            'modules/' . $this->module->name . 'views/css/front/favoriteproducts-list.css',
             [
                 'media' => 'all',
                 'priority' => 1000,
@@ -15,7 +15,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
 
         $this->registerJavascript(
             'front-controller-module',
-            'modules/' . $this->module->name . '/views/js/front/ajax/ajax_favoriteproducts_list.js',
+            'modules/' . $this->module->name . 'views/js/front/ajax/ajax_favoriteproducts_list.js',
             [
                 'position' => 'bottom',
                 'priority' => 1000,
@@ -33,7 +33,7 @@ class FavoriteProductsListModuleFrontController extends ModuleFrontController
 
         $this->registerJavascript(
             'front-controller-module-buy',
-            'modules/' . $this->module->name . '/views/js/front/ajax/ajax_favoriteproducts_buy.js',
+            'modules/' . $this->module->name . 'views/js/front/ajax/ajax_favoriteproducts_buy.js',
             [
                 'position' => 'bottom',
                 'priority' => 1000,
@@ -383,7 +383,7 @@ class GetProductData extends ProductListingFrontController
         );
 
         if (!Validate::isLoadedObject($this->category) || !$this->category->active) {
-            Tools::redirect('index.php?controller=404');
+            Tools::redirect(_PS_ROOT_DIR_ . 'index.php?controller=404');
         }
 
         parent::init();

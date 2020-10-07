@@ -20,8 +20,11 @@ $(document).ready(function () {
     const checked = check.join(",");
     console.log("click buy " + checked);
 
+    let res = siteurl + "module/favoriteproducts/ajax_favoriteproducts_buy_all";
+    res = res.replace("/modules", "");
+
     $.ajax({
-      url: "/module/favoriteproducts/ajax_favoriteproducts_buy_all",
+      url: res,
       type: "POST",
       cache: false,
       data: {
@@ -47,8 +50,9 @@ $(document).ready(function () {
       },
     });
 
-    //window.location = '{$urls.pages.cart}';
-    window.location = "/cart?action=show";
+    res = siteurl + "cart?action=show";
+    res = res.replace("/modules", "");
+    window.location = res;
 
     return false;
   });
@@ -77,8 +81,11 @@ $(document).ready(function () {
     const checked_items = $(".check:checked");
     if (checked_items.length == 0) alert(noSelectItem);
     else {
+      let res =
+        siteurl + "module/favoriteproducts/ajax_favoriteproducts_buy_favorites";
+      res = res.replace("/modules", "");
       $.ajax({
-        url: "/module/favoriteproducts/ajax_favoriteproducts_buy_favorites",
+        url: res,
         type: "POST",
         cache: false,
         data: {
@@ -104,8 +111,9 @@ $(document).ready(function () {
         },
       });
 
-      //window.location = '{$urls.pages.cart}';
-      window.location = "/cart?action=show";
+      res = siteurl + "cart?action=show";
+      res = res.replace("/modules", "");
+      window.location = res;
     }
     return false;
   });

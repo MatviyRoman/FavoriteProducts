@@ -4,9 +4,7 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_AllModuleFrontController extends
 {
     public function initContent()
     {
-        // if (Context::getContext()->customer->logged && isset($_GET['check'])) {
-        // $id_products = (explode(',', $_GET['check']));
-
+        //if (Context::getContext()->customer->logged) {
         if (Context::getContext()->customer->logged && isset($_POST['check'])) {
 
             // $db = Db::getInstance();
@@ -75,7 +73,7 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_AllModuleFrontController extends
             //     'cart' => true,
             // ));
 
-            Tools::redirect('/cart?action=show');
+            Tools::redirect(_PS_ROOT_DIR_ . '/cart?action=show');
         } else {
             $this->context->smarty->assign(array(
                 'result' => false,

@@ -5,7 +5,7 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_FavoritesModuleFrontController e
     public function initContent()
     {
         // if (Context::getContext()->customer->logged && isset($_GET['check'])) {
-        // $id_products = (explode(',', $_GET['check']));
+        //     $id_products = (explode(',', $_GET['check']));
 
         if (Context::getContext()->customer->logged && isset($_POST['check'])) {
             $id_products = (explode(',', $_POST['check']));
@@ -53,7 +53,8 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_FavoritesModuleFrontController e
             //     'cart' => true,
             // ));
 
-            Tools::redirect('/cart?action=show');
+            Tools::redirect(_PS_ROOT_DIR_ . '/cart?action=show');
+            //Tools::redirect(_PS_ROOT_DIR_ . $urls . pages . cart);
         } else {
             $this->context->smarty->assign(array(
                 'result' => false,

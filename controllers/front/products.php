@@ -137,7 +137,6 @@ class FavoriteProductsProductsModuleFrontController extends ModuleFrontControlle
 
 class Info extends ProductListingFrontController
 {
-
     public $products = [];
 
     public function getInfo($products)

@@ -1,69 +1,69 @@
 .product-flags li .star {
     top: 0 !important;
     left: 180px !important;
-    z-index: 2;
+    z-index: 2 !important;
     top: -36px !important;
     left: 215px !important;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .product-flags li input:only-child {
     display: block !important;
-    width: 30px;
-    height: 30px;
+    width: 30px !important;
+    height: 30px !important;
 }
 
 .product-flags li.product-flags li.product-flag {
-    background: #fff;
+    background: #fff !important;
 }
 
 
 article {
-    position: relative;
+    position: relative !important;
 }
 
 article .item_product {
-    position: absolute;
-    top: -255px;
-    transform: scale(2);
-    left: 15px;
+    position: absolute !important;
+    top: -255px !important;
+    transform: scale(2) !important;
+    left: 15px !important;
 }
 
 .modal .star {
-    background: url(../../img/star.png) center no-repeat;
+    background: url(../../img/star.png) center no-repeat !important;
 }
 
 .custom-control {
-    padding-left: 0;
-    margin-bottom: 30px;
+    padding-left: 0 !important;
+    margin-bottom: 30px !important;
 }
 
 .custom-control .btn+.btn {
-    margin-left: 20px;
+    margin-left: 20px !important;
 }
 
 label {
-    margin: 0;
+    margin: 0 !important;
 }
 
 .result {
-    display: none;
+    display: none !important;
 }
 
 article {
-    margin-bottom: 40px;
+    margin-bottom: 40px !important;
 }
 
 article button.orderbtn {
-    margin-top: -63px;
+    margin-top: -63px !important;
     outline: none !important;
 }
 
 article .num {
-    padding: 9px 10px;
-    width: 13%;
+    padding: 9px 10px !important;
+    width: 13% !important;
 }
 
 article .product-flags {
-    top: 50px;
+    top: 50px !important;
 }

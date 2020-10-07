@@ -30,8 +30,11 @@ $(document).ready(function () {
 
     //product = product.toString();
 
+    let res = siteurl + "module/favoriteproducts/ajax_favoriteproducts_del_all";
+    res = res.replace("/modules", "");
+
     $.ajax({
-      url: "/module/favoriteproducts/ajax_favoriteproducts_del_all",
+      url: res,
       method: "POST",
       data: {
         //product: product
@@ -58,15 +61,19 @@ $(document).ready(function () {
       check.push($(this).val());
     });
     const checked = check.join("##");
-    console.log("click #delete " + checked);
+    console.log("click #deletee " + checked);
 
     if ($("article").length == false) {
       $("article, .custom-control, .favoriteproducts-wrapper").remove();
       $(".result").show();
     }
 
+    let res =
+      siteurl + "module/favoriteproducts/ajax_favoriteproducts_del_favorites";
+    res = res.replace("/modules", "");
+
     $.ajax({
-      url: "/module/favoriteproducts/ajax_favoriteproducts_del_favorites",
+      url: res,
       type: "POST",
       cache: false,
       data: {

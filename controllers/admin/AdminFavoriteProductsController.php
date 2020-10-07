@@ -369,7 +369,7 @@ class AdminFavoriteProductsController extends ModuleAdminController
     {
         parent::setMedia($isNewTheme);
 
-        $this->addCSS(_MODULE_DIR_ . $this->module->name . '/views/css/admin/admin.css');
-        $this->addJS(_MODULE_DIR_ . $this->module->name . '/views/js/admin/admin.js');
+        $this->addCSS(__PS_BASE_URI__ . 'modules/' . $this->module->name . '/views/css/admin/admin.css');
+        $this->addJS(__PS_BASE_URI__ . 'modules/' . $this->module->name . '/views/js/admin/admin.js');
     }
 }
