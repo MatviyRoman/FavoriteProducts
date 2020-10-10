@@ -47,17 +47,18 @@ class FavoriteProductsProductsModuleFrontController extends ModuleFrontControlle
     public function initContent()
     {
         parent::initContent();
-        if (Context::getContext()->customer->logged || isset($_GET['id_customer'])) {
+        if (Context::getContext()->customer->logged) {
+            //if (Context::getContext()->customer->logged || isset($_GET['id_customer'])) {
 
-            if (isset($_GET['id_customer'])) {
-                $admin = true;
-                $customerShow = false;
-                $id_customer = (int)($_GET['id_customer']);
-            } else {
-                $admin = false;
-                $customerShow = true;
-                $id_customer = (int)$this->context->customer->id;
-            }
+            // if (isset($_GET['id_customer'])) {
+            //     $admin = true;
+            //     $customerShow = false;
+            //     $id_customer = (int)($_GET['id_customer']);
+            // } else {
+            $admin = false;
+            $customerShow = true;
+            $id_customer = (int)$this->context->customer->id;
+            //}
             $db = Db::getInstance();
             $id_shop = (int)Context::getContext()->shop->id;
             $sql = new DbQuery();

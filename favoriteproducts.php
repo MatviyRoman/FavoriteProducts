@@ -48,13 +48,13 @@ class Favoriteproducts extends Module
         $tab->class_name = 'AdminFavoriteProducts';
         $tab->module = $this->name;
         //$tab->id_parent = (int)Tab::getIdFromClassName('DEFAULT');
-        //$tab->id_parent = 2;
+        $tab->id_parent = 2;
         $tab->icon = 'star';
-        //$tab->name[1] = $this->l('Favorite Products List');
+        $tab->name[1] = $this->l('Favorite Products List');
         $languages = Language::getLanguages();
-        foreach ($languages as $lang) {
-            $tab->name[$lang['id_lang']] = $this->l('Favorite Products List');
-        }
+        // foreach ($languages as $lang) {
+        //     $tab->name[$lang['id_lang']] = $this->l('Favorite Products List');
+        // }
         $tab->active = 1;
         if (!$tab->save()) {
             return false;

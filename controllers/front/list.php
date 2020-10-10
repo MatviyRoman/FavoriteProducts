@@ -479,62 +479,6 @@ class GetProductData extends ProductListingFrontController
 
 
 
-    // public function getFrontendProductInformation($allSelectedProductIds, $languageId)
-    // {
-    //     // set default category Home
-    //     $category = new Category((int)2);
-
-    //     // create new product search proider
-    //     $searchProvider = new CategoryProductSearchProvider(
-    //         $this->context->getTranslator(),
-    //         $category
-    //     );
-
-    //     // set actual context
-    //     $context = new ProductSearchContext($this->context);
-
-    //     // create new search query
-    //     $query = new ProductSearchQuery();
-    //     $query->setResultsPerPage(PHP_INT_MAX)->setPage(1);
-    //     $query->setSortOrder(new SortOrder('product', 'position', 'asc'));
-
-    //     $result = $searchProvider->runQuery(
-    //         $context,
-    //         $query
-    //     );
-
-    //     // Product handling - to get relevant data
-    //     $assembler = new ProductAssembler($this->context);
-    //     $presenterFactory = new ProductPresenterFactory($this->context);
-    //     $presentationSettings = $presenterFactory->getPresentationSettings();
-    //     $presenter = new ProductListingPresenter(
-    //         new ImageRetriever(
-    //             $this->context->link
-    //         ),
-    //         $this->context->link,
-    //         new PriceFormatter(),
-    //         new ProductColorsRetriever(),
-    //         $this->context->getTranslator()
-    //     );
-
-    //     $products = array();
-    //     foreach ($result->getProducts() as $rawProduct) {
-    //         $productId = $rawProduct['id_product'];
-    //         if (in_array($productId, $allSelectedProductIds)) {
-    //             $product = $presenter->present(
-    //                 $presentationSettings,
-    //                 $assembler->assembleProduct($rawProduct),
-    //                 $this->context->language
-    //             );
-    //             array_push($products, $product);
-    //         }
-    //     }
-
-    //     return $products;
-    // }
-
-
-
     //work
     // $products = array($favoriteproducts);
 

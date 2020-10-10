@@ -99,8 +99,8 @@
                             
                                                         <div class="add">
                                                             <button class="btn btn-primary add-to-cart" data-button-action="add-to-cart" type="submit">
-                                                                <i class="material-icons shopping-cart"></i>
-                                                                У Кошик
+                                                                <i class="material-icons shopping-cart"></i>
+                                                                {l s='Add to cart'}
                                                             </button>
                                                         </div>
                                                         {* <input type="hidden" name="token" value="09ea14f56163d462ea41103809bd0c15">

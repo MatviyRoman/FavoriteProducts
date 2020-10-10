@@ -1,82 +1,110 @@
 article {
-    position: relative !important;
-    margin-bottom: 50px !important;
+  position: relative !important;
+  margin-bottom: 50px !important;
 }
 
 article .item_product {
-    display: none !important;
+  display: none !important;
 }
 
 article[id^="product"] input[type="checkbox"] {
-    display: block !important;
+  display: block !important;
 }
 
 article .star {
-    display: block !important;
-    width: 50px !important;
-    height: 50px !important;
-    /* transition: width 1s; */
-    position: absolute !important;
-    top: -285px !important;
-    right: 0px !important;
+  display: block !important;
+  width: 50px !important;
+  height: 50px !important;
+  /* transition: width 1s; */
+  position: absolute !important;
+  top: -285px !important;
+  right: 0px !important;
 }
 
 .product-prices .star {
-    position: absolute !important;
-    top: 0 !important;
-    right: 15px !important;
-    width: 50px !important;
-    height: 50px !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 15px !important;
+  width: 50px !important;
+  height: 50px !important;
 }
 
 .product-price-and-shipping {
-    position: relative !important;
+  position: relative !important;
 }
 
 article input[type="checkbox"][id^="cb"],
 .product-prices input[type="checkbox"][id^="cb"] {
-    display: none !important;
+  display: none !important;
 }
 
 label.star {
-    padding: 10px !important;
-    display: block !important;
-    position: absolute !important;
-    margin: 10px !important;
-    cursor: pointer !important;
-    -webkit-touch-callout: none !important;
-    -webkit-user-select: none !important;
-    -khtml-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    background: url(../../img/add_star.png) center no-repeat !important;
-    /* transition: all .8s; */
+  padding: 10px !important;
+  display: block !important;
+  position: absolute !important;
+  margin: 10px !important;
+  cursor: pointer !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  background: url(../../img/add_star.png) center no-repeat !important;
+  /* transition: all .8s; */
 }
 
 label.star::before {
-    background-color: white !important;
-    color: white !important;
-    content: " ";
-    display: block !important;
-    border-radius: 50%;
-    border: 1px solid grey !important;
-    position: absolute !important;
-    top: -5px !important;
-    left: -5px !important;
-    width: 25px !important;
-    height: 25px !important;
-    text-align: center !important;
-    line-height: 28px !important;
-    transition-duration: 0.4s !important;
-    transform: scale(0) !important;
+  background-color: white !important;
+  color: white !important;
+  content: " ";
+  display: block !important;
+  border-radius: 50%;
+  border: 1px solid grey !important;
+  position: absolute !important;
+  top: -5px !important;
+  left: -5px !important;
+  width: 25px !important;
+  height: 25px !important;
+  text-align: center !important;
+  line-height: 28px !important;
+  transition-duration: 0.4s !important;
+  transform: scale(0) !important;
 }
 
-:checked+label.star {
-    background: url(../../img/star.png) center no-repeat !important;
-    /* transition: all .8s; */
+:checked + label.star {
+  background: url(../../img/star.png) center no-repeat !important;
+  /* transition: all .8s; */
 }
 
-#main .check, .modal-content .check  {
-    display: none !important;
+#main .check,
+.modal-content .check {
+  display: none !important;
+}
+
+article[id^="product"] {
+  position: relative;
+}
+
+article[id^="product"] .product-description {
+  height: 120px !important;
+}
+
+article[id^="product"] .thumbnail-container {
+  height: 360px;
+}
+
+article[id^="product"] .product-thumbnail img {
+  top: -40px !important;
+}
+
+article[id^="product"] form#add-to-cart-or-refresh {
+  left: 50%;
+  top: 30px;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+article[id^="product"] .highlighted-informations {
+  height: 6.125rem !important;
 }
