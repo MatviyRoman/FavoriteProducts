@@ -400,20 +400,273 @@ class AdminFavoriteProductsController extends ModuleAdminController
         // $products = $db->executeS($sql);
 
         $db = Db::getInstance();
-        $mysql = 'SELECT p.id_product, p.active, pl.name, GROUP_CONCAT(DISTINCT(cl.name) SEPARATOR ",") as categories,GROUP_CONCAT(DISTINCT(im.id_image) SEPARATOR ",") as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,CONVERT(pl.meta_description USING utf8), pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
-        FROM ps_product p
-        LEFT JOIN ps_favorite_products fp ON (p.id_product = fp.id_product)
-        LEFT JOIN ps_product_lang pl ON (p.id_product = pl.id_product)
-        LEFT JOIN ps_category_product cp ON (p.id_product = cp.id_product)
-        LEFT JOIN ps_category_lang cl ON (cp.id_category = cl.id_category)
-        LEFT JOIN ps_category c ON (cp.id_category = c.id_category)
-        LEFT JOIN ps_product_tag pt ON (p.id_product = pt.id_product)
-        LEFT JOIN ps_image im ON (im.id_product = p.id_product)
-        WHERE pl.id_lang = 1
-        AND fp.id_customer = ' . $id_customer . '
-        AND cl.id_lang = 1
-        AND p.id_shop_default = 1 AND c.id_shop_default = 1
-        GROUP BY p.id_product';
+        $id_lang = $this->context->employee->id_lang;
+        $id_shop_default = (int)$this->context->shop->id;
+
+        // $mysql = 'SELECT p.id_product, p.active, pl.name, GROUP_CONCAT(DISTINCT(cl.name) SEPARATOR ",") as categories,GROUP_CONCAT(DISTINCT(im.id_image) SEPARATOR ",") as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,CONVERT(pl.meta_description USING utf8), pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ' . _DB_PREFIX_ . 'product p
+        // LEFT JOIN ' . _DB_PREFIX_ . 'favorite_products fp ON (p.id_product = fp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = ' . $id_lang . '
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND cl.id_lang = ' . $id_lang . '
+        // AND p.id_shop_default = ' . $id_shop_default . ' AND c.id_shop_default = ' . $id_shop_default . '
+        // GROUP BY p.id_product';
+
+
+
+        // $mysql = 'SELECT ps_product.id_product,ps_favorite_products.id_product,ps_product_lang.id_product
+        // FROM ' . _DB_PREFIX_ . 'product 
+        // INNER JOIN ' . _DB_PREFIX_ . 'favorite_products ON (ps_product.id_product = ps_favorite_products.id_product)
+        // INNER JOIN ' . _DB_PREFIX_ . 'product_lang ON (ps_product.id_product = ps_product_lang.id_product)
+        // WHERE ps_favorite_products.id_customer =' . $id_customer;
+
+
+        // $mysql = 'SELECT *, *
+        // FROM ps_product
+        // INNER JOIN ps_product.* ON ps_favorite_products.*
+        // WHERE id_customer=' . $id_customer;
+
+
+
+        // $mysql = 'SELECT p.id_product, p.active, pl.name, cl.name as categories,im.id_image as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,pl.meta_description, pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ' . _DB_PREFIX_ . 'product p, ' . _DB_PREFIX_ . 'favorite_products, ' . _DB_PREFIX_ . 'category_product, ' . _DB_PREFIX_ . 'category_lang, ' . _DB_PREFIX_ . 'category, ' . _DB_PREFIX_ . 'product_tag, ' . _DB_PREFIX_ . 'product_lang,' . _DB_PREFIX_ . 'image, 
+        // INNER JOIN ' . _DB_PREFIX_ . 'favorite_products fp ON (p.id_product = fp.id_product)
+        // INNER JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        // INNER JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        // INNER JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        // INNER JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        // INNER JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        // INNER JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = ' . $id_lang . '
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND cl.id_lang = ' . $id_lang . '
+        // AND p.id_shop_default = ' . $id_shop_default . ' AND c.id_shop_default = ' . $id_shop_default;
+
+        // $mysql = 'SELECT *, *, *, *, *, *, *, *
+        // FROM ' . _DB_PREFIX_ . 'favorite_products, ' . _DB_PREFIX_ . 'product, ' . _DB_PREFIX_ . 'category_product, ' . _DB_PREFIX_ . 'category_lang, ' . _DB_PREFIX_ . 'category, ' . _DB_PREFIX_ . 'product_tag, ' . _DB_PREFIX_ . 'image, ' . _DB_PREFIX_ . 'product_lang
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product.* ON ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang.* ON ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_product.* ON ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang.* ON ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category.* ON ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_tag.* ' . _DB_PREFIX_ . 'favorite_products.*
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image.* ' . _DB_PREFIX_ . 'favorite_products.*
+        // WHERE id_lang = ' . $id_lang . '
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND id_lang = ' . $id_lang . '
+        // AND id_product = id_product
+        // AND id_shop_default = ' . $id_shop_default . ' 
+        // AND id_shop_default = ' . $id_shop_default;
+
+
+        // $mysql = 'SELECT p.id_product, p.active, pl.name as categories as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,CONVERT(pl.meta_description USING utf8), pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ' . _DB_PREFIX_ . 'product p
+        // LEFT JOIN ' . _DB_PREFIX_ . 'favorite_products fp ON (p.id_product = fp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = ' . $id_lang . '
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND cl.id_lang = ' . $id_lang . '
+        // AND fl.id_product = p.id_product
+        // AND p.id_shop_default = ' . $id_shop_default . ' AND c.id_shop_default = ' . $id_shop_default;
+
+
+        // $mysql = 'SELECT p.id_product, p.active, pl.name as categories, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,CONVERT(pl.meta_description USING utf8), pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ' . _DB_PREFIX_ . 'product p
+        // LEFT JOIN ' . _DB_PREFIX_ . 'favorite_products fp ON (p.id_product = fp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = ' . $id_lang . '
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND cl.id_lang = ' . $id_lang . '
+        // AND fl.id_product = p.id_product
+        // AND p.id_shop_default = ' . $id_shop_default . ' 
+        // AND c.id_shop_default = ' . $id_shop_default;
+
+
+
+
+        // $mysql = 'SELECT DISTINCT p.id_product, p.active, pl.name, cl.name as categories,im.id_image as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,pl.meta_description, pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ps_product p
+        // LEFT JOIN ps_favorite_products fp ON (p.id_product = fp.id_product)
+        // LEFT JOIN ps_product_lang pl ON (p.id_product = pl.id_product)
+        // LEFT JOIN ps_category_product cp ON (p.id_product = cp.id_product)
+        // LEFT JOIN ps_category_lang cl ON (cp.id_category = cl.id_category)
+        // LEFT JOIN ps_category c ON (cp.id_category = c.id_category)
+        // LEFT JOIN ps_product_tag pt ON (p.id_product = pt.id_product)
+        // LEFT JOIN ps_image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = 1
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND cl.id_lang = 1
+        // AND p.id_shop_default = 1 AND c.id_shop_default = 1';
+
+
+        // $mysql = 'SELECT DISTINCT p.id_product, p.active, pl.name, cl.name as categories, im.id_image as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,pl.meta_description, pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        // FROM ps_product p
+        // LEFT JOIN ps_favorite_products fp ON (p.id_product = fp.id_product)
+        // LEFT JOIN ps_product_lang pl ON (p.id_product = pl.id_product)
+        // LEFT JOIN ps_category_product cp ON (p.id_product = cp.id_product)
+        // LEFT JOIN ps_category_lang cl ON (cp.id_category = cl.id_category)
+        // LEFT JOIN ps_category c ON (cp.id_category = c.id_category)
+        // LEFT JOIN ps_product_tag pt ON (p.id_product = pt.id_product)
+        // LEFT JOIN ps_image im ON (im.id_product = p.id_product)
+        // WHERE pl.id_lang = 1
+        // AND fp.id_customer = ' . $id_customer . '
+        // AND p.id_shop_default = 1
+        // AND c.id_shop_default = 1
+        // AND fp.id_product = p.id_product';
+
+
+
+        //     $mysql = 'SELECT DISTINCT fp.id_product, p.id_product, p.active, pl.name, cl.name as categories, im.id_image as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,pl.meta_description, pl.link_rewrite, pl.available_now, pl.available_later, p.available_for_order, p.date_add, p.show_price, p.online_only, p.condition, p.id_shop_default
+        //     FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product p ON (p.id_product = fp.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)   
+        //     WHERE im.cover = 1 
+        //     AND fp.id_customer = ' . $id_customer . ' 
+        //     AND p.id_shop_default = ' . $id_shop_default . ' 
+        //     AND c.id_shop_default = ' . $id_shop_default . '
+        //     AND c.id_category = 2 AND 0 <>
+        //      (SELECT DISTINCT COUNT(*)
+        //      FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        //       WHERE p.id_product = fp.id_product
+        //    )';
+
+
+
+        //     $mysql = 'SELECT DISTINCT fp.id_product, p.id_product, p.active, pl.name, cl.name as categories, im.id_image as images, p.price, p.id_tax_rules_group, p.wholesale_price, p.reference, p.supplier_reference, p.id_supplier, p.id_manufacturer, p.upc, p.ecotax, p.weight, p.quantity, pl.description_short, pl.description, pl.meta_title, pl.meta_keywords, pl.meta_description,pl.meta_description, pl.link_rewrite, p.id_shop_default
+        //     FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product p ON (p.id_product = fp.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON (p.id_product = pl.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category_product cp ON (p.id_product = cp.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON (cp.id_category = cl.id_category)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'category c ON (cp.id_category = c.id_category)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (p.id_product = pt.id_product)
+        //     LEFT JOIN ' . _DB_PREFIX_ . 'image im ON (im.id_product = p.id_product)   
+        //     WHERE im.cover = 1 
+        //     AND fp.id_customer = ' . $id_customer . ' 
+        //     AND p.id_shop_default = ' . $id_shop_default . ' 
+        //     AND c.id_shop_default = ' . $id_shop_default . '
+        //     AND c.id_category = 2 AND 0 <>
+        //      (SELECT DISTINCT COUNT(*)
+        //      FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        //       WHERE p.id_product = fp.id_product
+        //    )';
+
+
+
+
+        //         $mysql = 'SELECT fp.id_customer,fp.id_product,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,im.id_image,im.cover,cl.name as categories
+        // FROM ps_favorite_products fp 
+        // LEFT JOIN ps_product p ON fp.id_product = p.id_product
+        // LEFT JOIN ps_image im ON fp.id_product = im.id_product
+        // LEFT JOIN ps_category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ps_product_lang pl ON pl.id_product = fp.id_product
+        // WHERE 1 AND fp.id_customer = 3
+        // ORDER BY fp.id_product';
+
+
+        // $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image, im.cover as cover,cl.name as categories
+        // FROM ps_favorite_products fp 
+        // LEFT JOIN ps_product p ON fp.id_product = p.id_product
+        // LEFT JOIN ps_image im ON fp.id_product = im.id_product
+        // LEFT JOIN ps_category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ps_product_lang pl ON pl.id_product = fp.id_product
+        // WHERE fp.id_customer = 3
+        // AND fp.id_shop = 1
+        // AND pl.id_lang = 1
+        // AND cover = 1
+        // ORDER BY fp.id_product ASC';
+
+
+
+        // $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image, im.cover as cover,cl.name as categories
+        // FROM ' . _DB_PREFIX_ . 'favorite_products fp 
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON fp.id_product = im.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
+        // WHERE fp.id_customer = ' . $id_customer . '
+        // AND fp.id_shop = ' . $id_shop_default . '
+        // AND pl.id_lang = ' . $id_lang . '
+        // AND cover = 1
+        // ORDER BY fp.id_product ASC';
+
+
+        //         SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image, im.cover as cover,cl.name as categories
+        // FROM ps_favorite_products fp
+        // LEFT JOIN ps_product p ON fp.id_product = p.id_product
+        // LEFT JOIN ps_image im ON fp.id_product = im.id_product
+        // LEFT JOIN ps_category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ps_product_lang pl ON pl.id_product = fp.id_product
+        // WHERE fp.id_customer = 3
+        // AND fp.id_shop = 1
+        // AND fp.id_product
+        // AND pl.id_lang = 1
+        // AND cover IS NOT NULL OR NULL
+        // ORDER BY fp.id_product ASC
+
+
+        // $mysql = 'SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image,cl.name as categories
+        // FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON fp.id_product = im.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
+        // WHERE fp.id_customer = ' . $id_customer . '
+        // AND fp.id_shop = ' . $id_shop_default . '
+        // AND pl.id_lang = ' . $id_lang . '
+        // ORDER BY fp.id_product ASC';
+
+        $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image, im.cover as cover,im.position as position ,cl.name as categories
+        FROM ' . _DB_PREFIX_ . 'favorite_products fp
+        LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
+        LEFT JOIN ' . _DB_PREFIX_ . 'image im ON fp.id_product = im.id_product
+        LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
+        LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
+        WHERE fp.id_customer = ' . $id_customer . '
+        AND position = 1 OR position IS NULL
+        AND cover = 1
+        AND fp.id_shop = ' . $id_shop_default . '
+        AND pl.id_lang = ' . $id_lang . '
+        ORDER BY fp.id_product ASC';
+
+
+
+
+
+        // $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,im.id_image as image, im.cover,cl.name as categories
+        // FROM ' . _DB_PREFIX_ . 'favorite_products fp 
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'image im ON fp.id_product = im.id_product
+        // LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
+        // LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
+        // WHERE fp.id_customer = ' . $id_customer . '
+        // AND fp.id_shop = ' . $id_shop_default . '
+        // GROUP BY fp.id_product
+        // ORDER BY fp.id_product ASC';
+
+
+
         $products = $db->executeS($mysql);
 
         //var_dump($products);
@@ -434,6 +687,7 @@ class AdminFavoriteProductsController extends ModuleAdminController
                 'id_customer' => $id_customer,
                 //'products' =>  $info->getInfo($products),
                 'products' => $products,
+                'url' => __PS_BASE_URI__
             )
         );
         return $this->context->smarty->fetch(_PS_MODULE_DIR_ . "favoriteproducts/views/templates/admin/products.tpl");

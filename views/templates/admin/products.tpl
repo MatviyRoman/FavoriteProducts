@@ -108,6 +108,8 @@
 {/block} *}
 
 {block name=favoriteproducts}
+    
+    {* {$products|dump} *}
     <div class="panel col-lg-12">
         <div class="panel-heading">
             Favorite Products List
@@ -126,8 +128,21 @@
                 .table-responsive-row td:nth-of-type(3):before {
                     content: "Product name";
                 }
+    
                 .table-responsive-row td:nth-of-type(4):before {
+                    content: "Product price";
+                }
+    
+                .table-responsive-row td:nth-of-type(5):before {
+                    content: "Product description short";
+                }
+    
+                .table-responsive-row td:nth-of-type(6):before {
                     content: "Product categories";
+                }
+    
+                .table-responsive-row td:nth-of-type(7):before {
+                    content: "Date add";
                 }
             }
         </style>
@@ -154,10 +169,24 @@
                         </th>
                         <th class="">
                             <span class="title_box">
+                                Price without tax
+                            </span>
+                        </th>
+                        <th class="">
+                            <span class="title_box">
+                                Product description short
+                            </span>
+                        </th>
+                        <th class="">
+                            <span class="title_box">
                                 Product categories
                             </span>
                         </th>
-                        <th></th>
+                        <th class="">
+                            <span class="title_box">
+                                Date Add
+                            </span>
+                        </th>
                     </tr>
                 </thead>
     
@@ -169,15 +198,29 @@
                             </td>
         
                             <td>
-                                {$image = Image::getCover($product['id_product'])}
-                                {* {$image['id_image']|dump} *}
-                                <img src="{$link->getImageLink($product.link_rewrite,  $image['id_image'])}" alt="" width="45" height="auto">
+                                {if $product['image']}
+                                    {* {$image = Image::getCover($product['id_product'])}
+                                    <img src="{$link->getImageLink($product.link_rewrite,  $image['id_product'])}" alt="" width="45" height="auto"> *}
+                                    <img src="{$link->getImageLink($product.link_rewrite,  $product['image'])}" alt="" width="45" height="auto">
+                                {else}
+                                    {* <img src="{$urls.no_picture_image.bySize.home_default.url}" /> *}
+                                    <img src="{$url}/img/p/en-default-home_default.jpg" alt="" width="45" height="auto">
+                                {/if}
                             </td>
                             <td>
                                 {$product['name']}
                             </td>
                             <td>
+                                {$product['price']|string_format:"%.2f"}
+                            </td>
+                            <td>
+                                {$product['description_short']}
+                            </td>
+                            <td>
                                 {$product['categories']}
+                            </td>
+                            <td>
+                                {$product['date_add']}
                             </td>
                         </tr>
                     {/foreach}
