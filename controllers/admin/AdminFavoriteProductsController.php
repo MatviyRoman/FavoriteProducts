@@ -65,18 +65,18 @@ class AdminFavoriteProductsController extends ModuleAdminController
         $db = Db::getInstance();
         $id_lang = $this->context->employee->id_lang;
         $id_shop_default = (int)$this->context->shop->id;
-        $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,im.id_image as image, im.cover as cover,im.position,cl.name as categories
+
+        $mysql = 'SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,cl.name as categories, im.id_image as image
         FROM ' . _DB_PREFIX_ . 'favorite_products fp
         LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
-        left JOIN ' . _DB_PREFIX_ . 'image im ON fp.id_product = im.id_product
+        LEFT JOIN ' . _DB_PREFIX_ . 'image im ON im.id_image = (SELECT im.id_image FROM ps_image im WHERE fp.id_product = im.id_product LIMIT 1)
         LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
         LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
         WHERE fp.id_customer = ' . $id_customer . '
         AND fp.id_shop = ' . $id_shop_default . '
         AND pl.id_lang = ' . $id_lang . '
-        AND cover = 1 or cover IS NULL
-        AND position = 1 OR position IS NULL
         ORDER BY fp.id_product ASC';
+
         $products = $db->executeS($mysql);
 
         $this->context->smarty->assign(
