@@ -28,8 +28,6 @@ $(document).ready(function () {
       }
     });
 
-    //product = product.toString();
-
     let res = siteurl + "module/favoriteproducts/ajax_favoriteproducts_del_all";
     res = res.replace("/modules", "");
 

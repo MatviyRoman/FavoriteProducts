@@ -1,14 +1,3 @@
-/* .favoriteproducts_block_admin {
-    background: #fff;
-    padding: 15px;
-    margin-bottom: 30px;
-} */
-
-/* 
-.panel-heading .badge {
-    display: none;
-} */
-
 .panel-heading-action {
   display: none !important;
 }
@@ -39,10 +28,6 @@ article .num::before {
   position: absolute;
   padding-left: 10px;
 }
-
-/* article img {
-  margin-right: 10px;
-} */
 
 article .cat {
   position: relative;

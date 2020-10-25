@@ -15,7 +15,6 @@ article .star {
   display: block !important;
   width: 50px !important;
   height: 50px !important;
-  /* transition: width 1s; */
   position: absolute !important;
   top: -285px !important;
   right: 0px !important;
@@ -51,7 +50,6 @@ label.star {
   -ms-user-select: none !important;
   user-select: none !important;
   background: url(../../img/add_star.png) center no-repeat !important;
-  /* transition: all .8s; */
 }
 
 label.star::before {
@@ -74,7 +72,6 @@ label.star::before {
 
 :checked + label.star {
   background: url(../../img/star.png) center no-repeat !important;
-  /* transition: all .8s; */
 }
 
 #main .check,

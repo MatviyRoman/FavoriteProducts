@@ -4,20 +4,12 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_FavoritesModuleFrontController e
 {
     public function initContent()
     {
-        // if (Context::getContext()->customer->logged && isset($_GET['check'])) {
-        //     $id_products = (explode(',', $_GET['check']));
-
         if (Context::getContext()->customer->logged && isset($_POST['check'])) {
             $id_products = (explode(',', $_POST['check']));
-            $context = Context::getContext();
-            var_dump($id_products);
-
-            $id_customer = (int)$this->context->customer->id;
 
             foreach ($id_products as $id_product) {
                 var_dump($id_product);
-                $id_customization = (int)Tools::getValue('id_customization'); // = 0
-                $price_product = (int)Tools::getValue('priceform');
+                $id_customization = (int)Tools::getValue('id_customization');
 
                 /* Create the cart */
                 if (!$this->context->cart->id) {
@@ -39,22 +31,13 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_FavoritesModuleFrontController e
                 $cart = $this->context->cart;
 
                 /* Select the product */
-                //$product = new Product($id_product, true, (int)($this->context->cookie->id_lang));
                 $id_product_attribute = Product::getDefaultAttribute($id_product);
 
                 /* Add to cart */
                 $cart->updateQty(1, $id_product, $id_product_attribute, $id_customization);
             }
 
-            // $this->context->smarty->assign(array(
-            //     //'result' => 'All product add to cart where customer id=' . (int)$id_customer . ' products id=' . implode(",", $id_products),
-            //     'result' => false,
-            //     'error' => false,
-            //     'cart' => true,
-            // ));
-
             Tools::redirect(_PS_ROOT_DIR_ . '/cart?action=show');
-            //Tools::redirect(_PS_ROOT_DIR_ . $urls . pages . cart);
         } else {
             $this->context->smarty->assign(array(
                 'result' => false,
@@ -65,9 +48,3 @@ class FavoriteProductsAjax_FavoriteProducts_Buy_FavoritesModuleFrontController e
         }
     }
 }
-
-//CartController::processChangeProductInCart()
-
-// class AddToCart extends CartController
-// {
-// }

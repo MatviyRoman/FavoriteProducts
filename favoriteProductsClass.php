@@ -1,6 +1,5 @@
 <?php
 
-// class favoriteProductsClass extends ObjectModelCore
 class favoriteProductsClass extends ObjectModel
 {
     public $id_favorite_products;
@@ -22,11 +21,6 @@ class favoriteProductsClass extends ObjectModel
             'lastname' =>  ['type' => self::TYPE_STRING, 'validate' => 'isAnything', 'required' => true],
             'id_shop' =>  ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true,],
             'date_add' =>  ['type' => self::TYPE_DATE, 'validate' => 'isDateFormat'],
-
-
-            // 'description' =>  ['type' => self::TYPE_HTML, 'validate' => 'isAnything',],
-            // 'created' =>  ['type' => self::TYPE_DATE, 'validate' => 'isDateFormat'],
-            // 'id_pasta_category' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true,],
         ],
     ];
 }

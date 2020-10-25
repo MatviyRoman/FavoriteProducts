@@ -5,28 +5,15 @@ class FavoriteProductsAjax_FavoriteProducts_Del_FavoritesModuleFrontController e
     public function initContent()
     {
         if (Context::getContext()->customer->logged && isset($_POST['check'])) {
-            //if (Context::getContext()->customer->logged) {
-
             $db = Db::getInstance();
             $id_customer = (int)$this->context->customer->id;
             $id_products = (array)$_POST['check'];
-
-            var_dump($id_products);
-
-            //$id_products = array(1);
             $id_shop = (int)Context::getContext()->shop->id;
-
             $sql = new DbQuery();
             $sql->select('*');
             $sql->from('favorite_products', 'c');
             $sql->where('id_customer = ' . (int)$id_customer);
-            //$sql->where('id_product = ' . (int)$id_product);
             $sql->where('id_shop = ' . (int)$id_shop);
-
-
-            // $sql = 'SELECT * FROM `' . _DB_PREFIX_ . 'favorite_products` WHERE `id_customer` = :id_customer AND `id_product` = :id_product';
-            // $db->execute($sql);
-            //var_dump($db->executeS($sql));
 
             if ($db->executeS($sql)) {
                 foreach ($id_products as $id_product) {

@@ -10,7 +10,6 @@
         {/if}
     </h2>
     <br>
-    {* <div>{l s='This product is no longer available.' d='Shop.Notifications.Error'}</div> *}
     
     {if $products}
         
@@ -77,12 +76,6 @@
                         
                                             {hook h='displayProductPriceBlock' product=$product type='weight'}
                         
-                                            {* <form action="{$urls.pages.cart}" method="post">
-                                                <input type="hidden" name="id_product" value="{$product.id_product}">
-                                                <input type="number" name="qty" min="1" value="1" class="input-group form-control num">
-                                                <button class="btn btn-sm btn-primary btn-success orderbtn" data-button-action="add-to-cart" type="submit">{l s='Order now'}</button>
-                                            </form> *}
-                        
                         
                                             {if $customerShow}
                                                 <div class="product-quantity clearfix">
@@ -90,11 +83,6 @@
                                                     <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
                                                         <input type="hidden" name="token" value="{$static_token}">
                                                         <input type="hidden" name="id_product" value="{$product.id_product}" id="product_page_product_id">
-                                                        {* <input type="number" name="qty" min="1" value="1" class="input-group form-control num"> *}
-                                                        {* <input type="number" name="qty" min="1" value="1" class="input-group form-control num"> *}
-                                                        {* <div class="qty">
-                                                            <div class="input-group bootstrap-touchspin"><span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span><input type="number" name="qty" id="quantity_wanted" value="1" class="input-group form-control" min="1" aria-label="Кількість" style="display: block;"><span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span><span class="input-group-btn-vertical"><button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up" type="button"><i class="material-icons touchspin-up"></i></button><button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down" type="button"><i class="material-icons touchspin-down"></i></button></span></div>
-                                                        </div> *}
                                                         <input type="hidden" name="id_customization" value="0" id="product_customization_id">
                             
                                                         <div class="add">
@@ -103,41 +91,6 @@
                                                                 {l s='Add to cart'}
                                                             </button>
                                                         </div>
-                                                        {* <input type="hidden" name="token" value="09ea14f56163d462ea41103809bd0c15">
-                                                        <input type="hidden" name="id_product" value="2" id="product_page_product_id">
-                                                        <input type="hidden" name="id_customization" value="0" id="product_customization_id"> *}
-                            
-                                                        {* <div class="product-variants">
-                                                            <div class="clearfix product-variants-item">
-                                                                <span class="control-label">Розмір</span>
-                                                                <select class="form-control form-control-select" id="group_1" data-product-attribute="1" name="group[1]">
-                                                                    <option value="1" title="S" selected="selected">S</option>
-                                                                    <option value="2" title="M">M</option>
-                                                                    <option value="3" title="L">L</option>
-                                                                    <option value="4" title="XL">XL</option>
-                                                                </select>
-                                                            </div>
-                                                        </div> *}
-                            
-                                                        {* <div class="product-add-to-cart">
-                                                            <span class="control-label">Кількість</span>
-                                                            <div class="product-quantity clearfix"> *}
-                                                                {* <div class="qty">
-                                                                    <div class="input-group bootstrap-touchspin"><span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span><input type="number" name="qty" id="quantity_wanted" value="1" class="input-group form-control" min="1" aria-label="Кількість" style="display: block;"><span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span><span class="input-group-btn-vertical"><button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up" type="button"><i class="material-icons touchspin-up"></i></button><button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down" type="button"><i class="material-icons touchspin-down"></i></button></span></div>
-                                                                </div> *}
-                            
-                                                                {* <div class="add">
-                                                                    <button class="btn btn-primary add-to-cart" data-button-action="add-to-cart" type="submit">
-                                                                        <i class="material-icons shopping-cart"></i>
-                                                                        У Кошик
-                                                                    </button>
-                                                                </div> *}
-                                                                {* </div>
-                                                            <span id="product-availability">
-                                                            </span>
-                                                            <p class="product-minimal-quantity">
-                                                            </p>
-                                                        </div> *}
                                                     </form>
                                                 </div>
                                             {/if}
@@ -150,7 +103,6 @@
                                 {/block}
                             </div>
                 
-                            <!-- @todo: use include file='catalog/_partials/product-flags.tpl'} -->
                             {block name='product_flags'}
                                 <ul class="product-flags">
                                     {foreach from=$product.flags item=flag}
