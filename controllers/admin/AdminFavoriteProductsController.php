@@ -66,7 +66,7 @@ class AdminFavoriteProductsController extends ModuleAdminController
         $id_lang = $this->context->employee->id_lang;
         $id_shop_default = (int)$this->context->shop->id;
 
-        $mysql = 'SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,pl.link_rewrite, pl.name, image_shop.id_image id_image,il.legend as legend, cl.name AS category_default
+        $mysql = 'SELECT DISTINCT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,pl.link_rewrite, pl.name, image_shop.id_image id_image,il.legend as legend, cl.name AS category_default
         FROM ' . _DB_PREFIX_ . 'favorite_products fp
         LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
         LEFT JOIN ' . _DB_PREFIX_ . 'product_attribute_shop product_attribute_shop ON (p.id_product = product_attribute_shop.id_product AND product_attribute_shop.default_on = 1 AND product_attribute_shop.id_shop=' . $id_shop_default . ')
