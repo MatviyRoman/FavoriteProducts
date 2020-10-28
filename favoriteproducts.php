@@ -15,7 +15,7 @@ class Favoriteproducts extends Module
         $this->context = Context::getContext();
         $this->name = 'favoriteproducts';
         $this->tab = 'front_office_features';
-        $this->version = '1.1.1';
+        $this->version = '1.1.2';
         $this->author = 'Roman Matviy';
         $this->need_instance = 0;
         $this->bootstrap = true;

@@ -66,10 +66,12 @@ class AdminFavoriteProductsController extends ModuleAdminController
         $id_lang = $this->context->employee->id_lang;
         $id_shop_default = (int)$this->context->shop->id;
 
-        $mysql = 'SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,cl.name as categories, im.id_image as image
+        $mysql = 'SELECT fp.id_product, fp.id_customer,fp.date_add,fp.id_shop,p.price,p.id_category_default,pl.description,pl.description_short,pl.name,pl.link_rewrite,pl.id_lang,pl.link_rewrite, pl.name, image_shop.id_image id_image,il.legend as legend, cl.name AS category_default
         FROM ' . _DB_PREFIX_ . 'favorite_products fp
         LEFT JOIN ' . _DB_PREFIX_ . 'product p ON fp.id_product = p.id_product
-        LEFT JOIN ' . _DB_PREFIX_ . 'image im ON im.id_image = (SELECT im.id_image FROM ps_image im WHERE fp.id_product = im.id_product LIMIT 1)
+        LEFT JOIN ' . _DB_PREFIX_ . 'product_attribute_shop product_attribute_shop ON (p.id_product = product_attribute_shop.id_product AND product_attribute_shop.default_on = 1 AND product_attribute_shop.id_shop=' . $id_shop_default . ')
+        LEFT JOIN ' . _DB_PREFIX_ . 'image_shop image_shop ON (image_shop.id_product = p.id_product AND image_shop.cover=1 AND image_shop.id_shop=' . $id_shop_default . ')
+        LEFT JOIN ' . _DB_PREFIX_ . 'image_lang il ON (image_shop.id_image = il.id_image AND il.id_lang = ' . $id_lang . ')
         LEFT JOIN ' . _DB_PREFIX_ . 'category_lang cl ON cl.id_category = p.id_category_default
         LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON pl.id_product = fp.id_product
         WHERE fp.id_customer = ' . $id_customer . '
