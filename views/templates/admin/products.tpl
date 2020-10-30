@@ -87,8 +87,8 @@
                             </td>
         
                             <td>
-                                {if $product['image']}
-                                    <img src="{$link->getImageLink($product.link_rewrite,  $product['image'])}" alt="" width="45" height="auto">
+                                {if $product['id_image']}
+                                    <img src="{$link->getImageLink($product.link_rewrite,  $product['id_image'])}" alt="" width="45" height="auto">
                                 {else}
                                     <img src="{$url}/img/p/en-default-home_default.jpg" alt="" width="45" height="auto">
                                 {/if}
@@ -103,7 +103,7 @@
                                 {$product['description_short']}
                             </td>
                             <td>
-                                {$product['categories']}
+                                {$product['category_default']}
                             </td>
                             <td>
                                 {$product['date_add']}
